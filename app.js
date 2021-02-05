@@ -5,6 +5,7 @@ const searchMovie = document.querySelector('#searchMovie')
 
 const monitor = document.querySelector('#monitorscreen')
 let iframe = document.createElement("iframe");
+let erorrtext = document.querySelector('.innertext');
 
 
 // User searches for film
@@ -23,5 +24,13 @@ form.addEventListener('submit', (e) => {
         iframe.setAttribute("src", `https://www.youtube.com/embed/${trailer}?autoplay=1`);
         monitor.appendChild(iframe);
     })
+    .catch(err => {
+        if(err){
+            erorrtext.innerHTML = 'Invalid film, please enter a different title';
+            setTimeout(() => {
+                erorrtext.innerHTML = ""
+            }, 2000)
+        }
+    })
       
-})
+});
