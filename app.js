@@ -10,7 +10,7 @@ let erorrtext = document.querySelector('.innertext');
 let random = document.querySelector('.randomBtn');
 
 
-// User searches for film
+// Gets searched film
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const movie = searchMovie.value.trim()
