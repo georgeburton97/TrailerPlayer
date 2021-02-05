@@ -16,7 +16,6 @@ form.addEventListener('submit', (e) => {
 
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`)
     .then(res => res.json())
-    // .then(data => console.log(data.results[0].id))
     .then(data => fetch(`http://api.themoviedb.org/3/movie/${data.results[0].id}/videos?api_key=ba8b1e29d42df1c1972348fd0c3495e2`))
     .then(res => res.json())
     .then(data => {
