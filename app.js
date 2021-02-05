@@ -7,18 +7,11 @@ const monitor = document.querySelector('#monitorscreen')
 let iframe = document.createElement("iframe");
 
 
-
-
-
-
-
-
 // User searches for film
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const movie = searchMovie.value.trim()
 
-    
 
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`)
     .then(res => res.json())
@@ -28,14 +21,7 @@ form.addEventListener('submit', (e) => {
     .then(data => {
         trailer = data.results[0].key;
         iframe.setAttribute("src", `https://www.youtube.com/embed/${trailer}?autoplay=1`);
-        iframe.setAttribute("width", "1115");
-        iframe.setAttribute("height", "630");
         monitor.appendChild(iframe);
     })
       
 })
-
-
-
-
-

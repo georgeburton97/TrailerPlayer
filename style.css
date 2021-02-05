@@ -27,21 +27,49 @@ body {
     box-shadow: 0 0 3px 0 white;
 }
 
-#monitorscreen {
-    position: relative;
-    background-color: #777;
-    background-size: cover;
-    background-position: top center;
-    height: 0;
-    padding-bottom: 56.25%;
-    position: relative;
-    overflow: hidden;
-}
-
 #searchMovie {
     width: 40rem;
     height: 3.5rem;
     margin: auto;
+}
+
+/* Video Wrapper */
+#monitorscreen {
+    float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+}
+#monitorscreen iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.title {
+    color: #fff;
+}
+/* Media query */
+@media only screen and (max-width: 770px) {
+    input {
+        max-width: 300px;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
 }
 
 /* animation */
