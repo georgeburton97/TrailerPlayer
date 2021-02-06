@@ -10,7 +10,7 @@ let erorrtext = document.querySelector('.innertext');
 let random = document.querySelector('.randomBtn');
 
 
-// Gets searched film
+// Gets users fi
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const movie = searchMovie.value.trim()
@@ -36,43 +36,6 @@ form.addEventListener('submit', (e) => {
       
 });
 
-// Get Random Date
-// ========================================================
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-let newdateOne = randomDate(new Date(1980, 0, 1), new Date())
-let newdateTwo = randomDate(new Date(1980, 0, 1), new Date())
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
- 
-let dateOne = formatDate(newdateOne);
-let dateTwo = formatDate(newdateTwo);
-
-let finalDateOne = undefined
-let finalDateTwo = undefined
-
-if(dateOne > dateTwo){
-    finalDateOne = dateTwo;
-    finalDateTwo = dateOne;
-} else {
-    finalDateOne = dateOne;
-    finalDateTwo = dateTwo;
-}
-
 
 // Get Random Trailer
 random.addEventListener('click', e => {
@@ -82,6 +45,47 @@ random.addEventListener('click', e => {
 
 
 let callback = () => {
+    // Get Random Date
+    // ========================================================
+
+    function randomDate(start, end) {
+        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    }
+    
+    let newdateOne = randomDate(new Date(1980, 0, 1), new Date())
+    let newdateTwo = randomDate(new Date(1980, 0, 1), new Date())
+    
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+     
+    let dateOne = formatDate(newdateOne);
+    let dateTwo = formatDate(newdateTwo);
+    
+    let finalDateOne = undefined
+    let finalDateTwo = undefined
+    
+    if(dateOne > dateTwo){
+        finalDateOne = dateTwo;
+        finalDateTwo = dateOne;
+    } else {
+        finalDateOne = dateOne;
+        finalDateTwo = dateTwo;
+    }
+
+
+
+
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=release_date.desc&page=1&release_date.gte=${finalDateOne}&release_date.lte=${finalDateTwo}&with_genres=16%2C35`)
     .then(response => response.json())
     .then(data => {
@@ -94,12 +98,8 @@ let callback = () => {
     .then(response => response.json())
     .then(data => {
         let randomTrailer = data.results[0];
-        if(randomTrailer.hasOwnProperty('key')){
             iframe.setAttribute("src", `https://www.youtube.com/embed/${randomTrailer.key}?autoplay=1`);
             monitor.appendChild(iframe);
-        } else {
-            callback();
-        }
     })
     .catch(err => {
         callback();
