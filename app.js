@@ -2,6 +2,7 @@
 const apiKey = 'ba8b1e29d42df1c1972348fd0c3495e2';
 const form = document.querySelector('form');
 const searchMovie = document.querySelector('#searchMovie')
+const loader = document.querySelector('.spinner')
 
 const monitor = document.querySelector('#monitorscreen')
 let iframe = document.createElement("iframe");
@@ -10,10 +11,13 @@ let erorrtext = document.querySelector('.innertext');
 let random = document.querySelector('.randomBtn');
 
 
+
+
 // Gets users fi
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const movie = searchMovie.value.trim()
+    loader.style.visibility = "visible"
 
 
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}`)
@@ -24,12 +28,15 @@ form.addEventListener('submit', (e) => {
         trailer = data.results[0].key;
         iframe.setAttribute("src", `https://www.youtube.com/embed/${trailer}?autoplay=1`);
         monitor.appendChild(iframe);
+        loader.style.visibility = "hidden"
     })
     .catch(err => {
         if(err){
+            loader.style.visibility = "hidden"
             erorrtext.innerHTML = 'Invalid film, please enter a different title';
+            erorrtext.style.visibility = "visible"
             setTimeout(() => {
-                erorrtext.innerHTML = ""
+                erorrtext.style.visibility = "hidden"
             }, 2000)
         }
     })
@@ -39,7 +46,10 @@ form.addEventListener('submit', (e) => {
 
 // Get Random Trailer
 random.addEventListener('click', e => {
+    
+    loader.style.visibility = "visible"
     callback()
+    
 })
 
 
@@ -52,8 +62,8 @@ let callback = () => {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     }
     
-    let newdateOne = randomDate(new Date(1980, 0, 1), new Date())
-    let newdateTwo = randomDate(new Date(1980, 0, 1), new Date())
+    let newdateOne = randomDate(new Date(1960, 0, 1), new Date())
+    let newdateTwo = randomDate(new Date(1960, 0, 1), new Date())
     
     function formatDate(date) {
         var d = new Date(date),
@@ -84,8 +94,6 @@ let callback = () => {
     }
 
 
-
-
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=release_date.desc&page=1&release_date.gte=${finalDateOne}&release_date.lte=${finalDateTwo}`)
     .then(response => response.json())
     .then(data => {
@@ -100,6 +108,7 @@ let callback = () => {
         let randomTrailer = data.results[0];
             iframe.setAttribute("src", `https://www.youtube.com/embed/${randomTrailer.key}?autoplay=1`);
             monitor.appendChild(iframe);
+            loader.style.visibility = "hidden"
     })
     .catch(err => {
         callback();

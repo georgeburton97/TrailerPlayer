@@ -1,5 +1,6 @@
 body {
-    background-color: #222;
+    background: url(/cinemabackground.png) no-repeat center center/cover;
+    min-height: 100vh;
 }
 
 #monitor {
@@ -83,8 +84,15 @@ h5 {
 .innertext {
     text-align: center;
     color: red;
-    padding-top: 20px;
+    /* padding-top: 5px; */
+    visibility: hidden;
 }
+
+.spinner {
+    margin-top: 30px;
+    visibility: hidden;
+}
+
 /* Media query */
 @media only screen and (max-width: 770px) {
     input {
